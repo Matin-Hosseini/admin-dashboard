@@ -1,10 +1,6 @@
 import { Button } from "@mui/material";
-import { cookies } from "next/headers";
 
 const User = () => {
-  const myCookies = cookies();
-  console.log(myCookies.get("theme"));
-
   return (
     <div>
       {/* <Sidebar /> */}

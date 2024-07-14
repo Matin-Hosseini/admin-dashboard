@@ -83,11 +83,24 @@ const Login = () => {
           />
         </FormControl>
 
-        <FormGroup>
-          <FormControlLabel control={<Checkbox />} label="مرا به خاطر بسپار" />
+        <FormGroup sx={{ mb: 1 }}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                sx={{
+                  "&, &.Mui-checked": { color: "#fff" },
+                }}
+              />
+            }
+            label="مرا به خاطر بسپار"
+          />
         </FormGroup>
 
-        <Button variant="contained" className="w-full py-3 bg-pink-500">
+        <Button
+          variant="contained"
+          type="submit"
+          className="w-full py-3 bg-gray-500"
+        >
           ورود به پنل
         </Button>
       </form>
