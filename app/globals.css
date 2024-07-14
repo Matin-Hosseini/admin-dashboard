@@ -91,7 +91,7 @@ body {
 }
 
 .header .content {
-  background-color: rgb(166, 166, 197);
+  background-color: rgb(217 217 217);
   border-radius: var(--main-border-radius);
   padding: var(--main-padding);
 }
@@ -116,7 +116,7 @@ body {
 /* main ends */
 
 /* responsive starts  */
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
   /* .side-bar {
     right: -250px;
   } */

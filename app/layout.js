@@ -9,13 +9,17 @@ import { prefixer } from "stylis";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 
-const theme = (outerTheme) =>
-  createTheme({
+const theme = (outerTheme) => {
+  return createTheme({
     direction: "rtl",
     palette: {
       // mode: outerTheme.palette.mode,
     },
+    typography: {
+      fontFamily: `'__shabnamFont_fa1468', '__shabnamFont_Fallback_fa1468'`,
+    },
   });
+};
 
 const cacheRtl = createCache({
   key: "muirtl",

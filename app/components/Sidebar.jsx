@@ -18,7 +18,7 @@ const Sidebar = ({ isOpen, onClose }) => {
       <div className="content p-4">
         <div className="flex justify-between items-center mb-10">
           <Logo />
-          <IconButton onClick={() => onClose()}>
+          <IconButton className="lg:hidden" onClick={() => onClose()}>
             <IoMdClose />
           </IconButton>
         </div>
