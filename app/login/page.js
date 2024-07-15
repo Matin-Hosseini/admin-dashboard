@@ -1,4 +1,6 @@
 "use client";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import chess from "@/public/images/login/chess.jpg";
 import chess2 from "@/public/images/login/chess-vertical.jpg";
@@ -18,6 +20,9 @@ import { IoMdEyeOff } from "react-icons/io";
 
 import { useState } from "react";
 import Logo from "../components/Logo";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import ThreeDotsLoading from "../components/ThreeDotLoading";
 
 const loginFormControlStyles = {
   width: "100%",
@@ -28,8 +33,32 @@ const loginFormControlStyles = {
   "& svg": { color: "#fff" },
 };
 
+const loginFieldsSchema = z.object({
+  username: z.string().min(1, "نام کاربری الزامی است."),
+  password: z.string().min(1, "رمز عبور الزامی است."),
+  remember_me: z.boolean(),
+});
+
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: zodResolver(loginFieldsSchema),
+  });
+
+  const handleLogin = async (data) => {
+    // console.log(data);
+
+    const res = await axios.get(
+      "https://iroriginaltest.com/api/Customer/GetAllCustomers"
+    );
+
+    console.log(res.data);
+  };
 
   return (
     <div className="bg-black relative">
@@ -46,7 +75,10 @@ const Login = () => {
         />
       </div>
 
-      <form className="absolute top-1/2 right-1/2 px-5 w-3/4 md:w-auto py-5 rounded-lg  bg-[rgba(255,255,255,0.2)] backdrop-blur-[2px] translate-x-1/2 -translate-y-1/2 text-white">
+      <form
+        className="absolute top-1/2 right-1/2 px-5 w-3/4 md:w-auto py-5 rounded-lg  bg-[rgba(255,255,255,0.2)] backdrop-blur-[2px] translate-x-1/2 -translate-y-1/2 text-white"
+        onSubmit={handleSubmit(handleLogin)}
+      >
         <div className="flex justify-center mb-5">
           <Logo />
         </div>
@@ -55,16 +87,21 @@ const Login = () => {
             نام کاربری
           </InputLabel>
           <OutlinedInput
+            {...register("username")}
             id="outlined-adornment-password"
             type="text"
             label="username"
           />
+          {errors.username && (
+            <span className="text-red-400">{errors.username.message}</span>
+          )}
         </FormControl>
         <FormControl sx={loginFormControlStyles} variant="outlined">
           <InputLabel htmlFor="outlined-adornment-password">
             رمز عبور
           </InputLabel>
           <OutlinedInput
+            {...register("password")}
             id="outlined-adornment-password"
             type={showPassword ? "text" : "password"}
             endAdornment={
@@ -81,12 +118,16 @@ const Login = () => {
             }
             label="Password"
           />
+          {errors.password && (
+            <span className="text-red-400">{errors.password.message}</span>
+          )}
         </FormControl>
 
         <FormGroup sx={{ mb: 1 }}>
           <FormControlLabel
             control={
               <Checkbox
+                {...register("remember_me")}
                 sx={{
                   "&, &.Mui-checked": { color: "#fff" },
                 }}
@@ -99,9 +140,10 @@ const Login = () => {
         <Button
           variant="contained"
           type="submit"
-          className="w-full py-3 bg-gray-500"
+          className="w-full h-12 flex items-center justify-center bg-gray-500"
+          disabled={isSubmitting}
         >
-          ورود به پنل
+          {isSubmitting ? <ThreeDotsLoading /> : "ورود به پنل"}
         </Button>
       </form>
     </div>
