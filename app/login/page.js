@@ -53,11 +53,17 @@ const Login = () => {
   const handleLogin = async (data) => {
     // console.log(data);
 
-    const res = await axios.get(
-      "https://iroriginaltest.com/api/Customer/GetAllCustomers"
+    const res = await axios.post(
+      "https://iroriginaltest.com/api/Account/GetToken",
+      {
+        data: {
+          userName: "matinhosseini",
+          password: "0929323541",
+        },
+      }
     );
-
-    console.log(res.data);
+    console.log("response: ", res);
+    console.log("data: ", res.data);
   };
 
   return (
