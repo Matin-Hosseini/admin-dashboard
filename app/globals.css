@@ -66,7 +66,7 @@ body {
   bottom: 0;
   width: 300px;
   transition: 0.3s ease-in-out;
-  z-index: 10;
+  z-index: 999;
   padding: var(--main-padding);
   margin-left: 5px;
 }
@@ -110,7 +110,7 @@ body {
 }
 
 .main .content {
-  background-color: rgb(101, 221, 101);
+  /* background-color: rgb(101, 221, 101); */
   border-radius: var(--main-border-radius);
 }
 /* main ends */

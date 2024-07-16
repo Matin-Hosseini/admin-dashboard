@@ -2,6 +2,7 @@
 import Sidebar from "./components/Sidebar";
 import { useState } from "react";
 import Header from "@/app/components/Header";
+import Table from "./components/Table";
 
 export default function Home() {
   const [isSidbarOpen, setIsSidebarOpen] = useState(false);
@@ -17,7 +18,9 @@ export default function Home() {
         <div className="main-wrapper col-span-2 lg:col-start-2">
           <Header onSidebar={() => setIsSidebarOpen(true)} />
           <main className="main">
-            <div className="content">lorem200</div>
+            <div className="content">
+              <Table />
+            </div>
           </main>
         </div>
       </div>
