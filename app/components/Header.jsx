@@ -1,20 +1,33 @@
+"use client";
 import {
   Avatar,
+  Badge,
   FormControl,
   IconButton,
   InputAdornment,
   InputLabel,
+  Menu,
+  MenuItem,
   OutlinedInput,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
 import { CiMenuFries } from "react-icons/ci";
 import { IoIosSearch } from "react-icons/io";
 import profile from "@/public/images/profile.webp";
+import { FaRegBell } from "react-icons/fa6";
+import { useState } from "react";
 
 const Header = ({ onSidebar }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
-    <header className="header">
+    <header className="header z-50">
       <div className="content flex items-center w-full">
         <IconButton className="ml-4 lg:hidden " onClick={onSidebar}>
           <CiMenuFries />
@@ -62,7 +75,44 @@ const Header = ({ onSidebar }) => {
             />
           </FormControl>
 
-          <Avatar src={profile.src} />
+          <div className="flex items-center gap-4">
+            <IconButton onClick={handleClick}>
+              <Badge
+                badgeContent={4}
+                color="error"
+                sx={{
+                  cursor: "pointer",
+                  "& .MuiBadge-badge": { right: "100%" },
+                }}
+                max={10}
+              >
+                <FaRegBell fontSize={25} />
+              </Badge>
+            </IconButton>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+            >
+              <MenuItem>Profile</MenuItem>
+              <MenuItem>My account</MenuItem>
+              <MenuItem>Logout</MenuItem>
+            </Menu>
+
+            <Avatar src={profile.src} />
+          </div>
         </div>
       </div>
     </header>
