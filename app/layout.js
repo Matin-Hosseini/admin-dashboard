@@ -8,16 +8,20 @@ import rtlPlugin from "stylis-plugin-rtl";
 import { prefixer } from "stylis";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
+import { faIR } from "@mui/material/locale";
 
-const theme = createTheme({
-  direction: "rtl",
-  palette: {
-    // mode: outerTheme.palette.mode,
+const theme = createTheme(
+  {
+    direction: "rtl",
+    palette: {
+      // mode: outerTheme.palette.mode,
+    },
+    typography: {
+      fontFamily: `'__shabnamFont_fa1468', '__shabnamFont_Fallback_fa1468'`,
+    },
   },
-  typography: {
-    fontFamily: `'__shabnamFont_fa1468', '__shabnamFont_Fallback_fa1468'`,
-  },
-});
+  faIR
+);
 
 const cacheRtl = createCache({
   key: "muirtl",
