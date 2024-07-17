@@ -1,31 +1,34 @@
-import { Box, Button, IconButton } from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Fade,
+  IconButton,
+  Modal,
+  Typography,
+} from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { faIR } from "@mui/x-data-grid/locales";
 import { useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { BiMessageSquareAdd } from "react-icons/bi";
+import DeleteDialog from "./DeleteDialog";
 
-const columns = [
-  // { field: "id", headerName: "شناسه", width: 70 },
-  { field: "name", headerName: "نام و نام خانوادگی", width: 180 },
-  { field: "phone", headerName: "شماره موبایل", width: 150, editable: true },
-  { field: "nationalCode", headerName: "کد ملی", type: "string", width: 120 },
-  {
-    field: "actions",
-    headerName: "حرکات",
-    width: 140,
-    sortable: false,
-    renderCell: (params) => {
-      return (
-        <div className="flex items-center h-full">
-          <FaRegTrashAlt
-            className="text-red-500 cursor-pointer"
-            onClick={() => console.log(params)}
-          />
-        </div>
-      );
-    },
-  },
-];
+export function CustomFooterStatusComponent(props) {
+  console.log(props);
+  return (
+    <Box sx={{ p: 1, display: "flex", justifyContent: "space-between" }}>
+      <div>Custom Footer Content</div>
+      <IconButton onClick={handleDeleteSelected}>
+        <FaRegTrashAlt className="text-red-500 cursor-pointer" />
+      </IconButton>
+    </Box>
+  );
+}
 
 const initialRows = [
   {
@@ -84,21 +87,42 @@ const initialRows = [
   },
 ];
 
-export function CustomFooterStatusComponent(props) {
-  console.log(props);
-  return (
-    <Box sx={{ p: 1, display: "flex", justifyContent: "space-between" }}>
-      <div>Custom Footer Content</div>
-      <IconButton onClick={handleDeleteSelected}>
-        <FaRegTrashAlt className="text-red-500 cursor-pointer" />
-      </IconButton>
-    </Box>
-  );
-}
-
 export default function Table() {
   const [rows, setRows] = useState(initialRows);
   const [selectedRows, setSelectedRows] = useState([]);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteDialogRow, setDeleteDialogRow] = useState({});
+
+  const columns = [
+    // { field: "id", headerName: "شناسه", width: 70 },
+    { field: "name", headerName: "نام و نام خانوادگی", width: 180 },
+    { field: "phone", headerName: "شماره موبایل", width: 150, editable: true },
+    { field: "nationalCode", headerName: "کد ملی", type: "string", width: 120 },
+    {
+      field: "actions",
+      headerName: "",
+      width: 140,
+      sortable: false,
+      renderCell: (params) => {
+        return (
+          <div className="flex items-center h-full">
+            <IconButton
+              onClick={() => {
+                setShowDeleteModal(true);
+                setDeleteDialogRow(params.row);
+              }}
+            >
+              <FaRegTrashAlt className="text-red-500 text-lg" />
+            </IconButton>
+
+            <IconButton onClick={() => console.log(params)}>
+              <BiMessageSquareAdd className="text-green-500 text-lg" />
+            </IconButton>
+          </div>
+        );
+      },
+    },
+  ];
 
   const processRowUpdate = (newRow) => {
     setRows((prevRows) =>
@@ -118,29 +142,19 @@ export default function Table() {
     setSelectedRows([]);
   };
 
+  const deleteCustomer = () => {
+    console.log(deleteDialogRow);
+    setShowDeleteModal(false);
+  };
+
   return (
     <div style={{ height: 600, width: "100%" }}>
       <DataGrid
+        sx={{ "& .MuiDataGrid-cell:focus": { outline: "none" } }}
         rows={rows}
         columns={columns}
         slots={{
           toolbar: GridToolbar,
-          // footer: () => (
-          //   <Box
-          //     sx={{ p: 1, display: "flex", justifyContent: "space-between" }}
-          //   >
-          //     <div>Custom Footer Content</div>
-          //     <IconButton
-          //       onClick={handleDeleteSelected}
-          //       className={`${selectedRows.length === 0 && "hidden"}`}
-          //     >
-          //       <FaRegTrashAlt className="text-red-500 cursor-pointer text-lg" />
-          //     </IconButton>
-          //   </Box>
-          // ),
-        }}
-        slotProps={{
-          footer: { status },
         }}
         initialState={{
           pagination: {
@@ -150,9 +164,17 @@ export default function Table() {
         localeText={faIR.components.MuiDataGrid.defaultProps.localeText}
         pageSizeOptions={[5, 10]}
         checkboxSelection
+        disableRowSelectionOnClick
         onRowSelectionModelChange={handleSelectionChange}
         experimentalFeatures={{ newEditingApi: true }}
         processRowUpdate={processRowUpdate}
+      />
+
+      <DeleteDialog
+        show={showDeleteModal}
+        onDialogClose={() => setShowDeleteModal(false)}
+        row={deleteDialogRow}
+        onDelete={deleteCustomer}
       />
     </div>
   );
