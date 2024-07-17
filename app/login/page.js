@@ -74,15 +74,39 @@ const Login = () => {
     //   method: "POST",
     //   headers: myHeaders,
     //   body: raw,
-    //   redirect: "follow",
+    //   // redirect: "follow",\
+    //   mode: "no-cors",
     // };
 
-    // fetch(
-    //   "http://iroriginaltest.com/api/Account/GetToken",
-    //   requestOptions
-    // ).then((response) => response.text());
+    // fetch("https://iroriginaltest.com/api/Account/GetToken", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     username: "matinhosseini",
+    //     password: "09129323541",
+    //   }),
+    //   // mode: "no-cors",
+    // }).then((res) => {
+    //   console.log(res);
+    // });
     console.log("response: ", res);
     console.log("data: ", res.data);
+
+    // fetch("https://iroriginaltest.com/api/Account/GetToken", {
+    //   method: "POST",
+    //   body: JSON.stringify({
+    //     userName: "matinhosseini",
+    //     password: "09129323541",
+    //   }),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   // mode: "no-cors",
+    // }).then((res) => console.log(res));
+
+    // axios.post("https://iroriginaltest.com/api/Account/GetToken",)
   };
 
   return (

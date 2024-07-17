@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { PiUsers } from "react-icons/pi";
 import { IoMdClose } from "react-icons/io";
 import { CiLogout } from "react-icons/ci";
+import NavLink from "./NavLink";
 
 const menuItems = [];
 
@@ -32,6 +33,9 @@ const Sidebar = ({ isOpen, onClose }) => {
                   <PiUsers />
                   کاربران
                 </Link>
+              </li>
+              <li>
+                <NavLink />
               </li>
               <li className="py-2 px-4">
                 <Link
