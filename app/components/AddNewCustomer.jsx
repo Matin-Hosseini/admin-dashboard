@@ -23,10 +23,16 @@ const AddNewCustomer = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(addNewCustomerShema),
   });
+
+  const handleDialogClose = () => {
+    setshowDialog(false);
+    reset();
+  };
 
   const submitHandler = async (data) => {
     console.log(data);
@@ -92,7 +98,7 @@ const AddNewCustomer = () => {
               <Button
                 color="error"
                 variant="outlined"
-                onClick={() => setshowDialog(false)}
+                onClick={handleDialogClose}
               >
                 لغو
               </Button>
