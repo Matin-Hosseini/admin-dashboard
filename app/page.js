@@ -3,6 +3,9 @@ import Sidebar from "./components/Sidebar";
 import { useState } from "react";
 import Header from "@/app/components/Header";
 import Table from "./components/Table";
+import { Button } from "@mui/material";
+import { RiUserAddLine } from "react-icons/ri";
+import AddNewCustomer from "./components/AddNewCustomer";
 
 export default function Home() {
   const [isSidbarOpen, setIsSidebarOpen] = useState(false);
@@ -19,6 +22,7 @@ export default function Home() {
           <Header onSidebar={() => setIsSidebarOpen(true)} />
           <main className="main">
             <div className="content">
+              <AddNewCustomer />
               <Table />
             </div>
           </main>

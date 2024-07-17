@@ -58,10 +58,29 @@ const Login = () => {
       {
         data: {
           userName: "matinhosseini",
-          password: "0929323541",
+          password: "09129323541",
         },
       }
     );
+
+    // const myHeaders = new Headers();
+    // myHeaders.append("Content-Type", "application/json");
+
+    // const raw = JSON.stringify({
+    //   userName: "matinhosseini",
+    //   password: "09129323541",
+    // });
+    // const requestOptions = {
+    //   method: "POST",
+    //   headers: myHeaders,
+    //   body: raw,
+    //   redirect: "follow",
+    // };
+
+    // fetch(
+    //   "http://iroriginaltest.com/api/Account/GetToken",
+    //   requestOptions
+    // ).then((response) => response.text());
     console.log("response: ", res);
     console.log("data: ", res.data);
   };
