@@ -7,6 +7,7 @@ import { PiUsers } from "react-icons/pi";
 import { IoMdClose } from "react-icons/io";
 import { CiLogout } from "react-icons/ci";
 import NavLink from "./NavLink";
+import LogoutBtn from "./LogoutBtn";
 
 const menuItems = [];
 
@@ -58,13 +59,7 @@ const Sidebar = ({ isOpen, onClose }) => {
           </div>
 
           <div>
-            <Button
-              className="flex items-center gap-2 w-full"
-              color="secondary"
-            >
-              <CiLogout />
-              خروج از حساب کاربری
-            </Button>
+            <LogoutBtn />
           </div>
         </div>
       </div>
