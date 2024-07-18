@@ -45,6 +45,7 @@ const loginFieldsSchema = z.object({
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarTitle, setSnackbarTitle] = useState("");
 
   const {
     register,
@@ -55,18 +56,24 @@ const Login = () => {
   });
 
   const handleLogin = async (data) => {
+    console.log(data);
     try {
       const res = await axios.post(
         "https://iroriginaltest.com/api/Account/GetToken",
         {
-          userName: "matinhosseini",
-          password: "0912932354",
+          userName: data.username,
+          password: data.password,
         }
       );
-      console.log("response: ", res);
-      console.log("data: ", res.data);
+
+      Cookies.set("token", res.data.result, { expires: 1, path: "" });
     } catch (error) {
       setShowSnackbar(true);
+      if (error.response.status === 400) {
+        setSnackbarTitle("نام کاربری یا رمز عبور اشتباه است.");
+      } else {
+        setSnackbarTitle("خطا در برقراری ارتباط");
+      }
     }
   };
 
@@ -161,7 +168,7 @@ const Login = () => {
         open={showSnackbar}
         autoHideDuration={3000}
         onClose={() => setShowSnackbar(false)}
-        message="خطا در برقراری ارتباط"
+        message={snackbarTitle}
         action={
           <IconButton color="inherit" onClick={() => setShowSnackbar(false)}>
             <IoMdClose />
