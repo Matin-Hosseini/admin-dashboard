@@ -14,6 +14,7 @@ import {
   InputAdornment,
   InputLabel,
   OutlinedInput,
+  Snackbar,
 } from "@mui/material";
 import { IoEye } from "react-icons/io5";
 import { IoMdEyeOff } from "react-icons/io";
@@ -23,6 +24,8 @@ import Logo from "../components/Logo";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import ThreeDotsLoading from "../components/ThreeDotLoading";
+import { IoMdClose } from "react-icons/io";
+import Cookies from "js-cookie";
 
 const loginFormControlStyles = {
   width: "100%",
@@ -41,6 +44,7 @@ const loginFieldsSchema = z.object({
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showSnackbar, setShowSnackbar] = useState(false);
 
   const {
     register,
@@ -51,62 +55,19 @@ const Login = () => {
   });
 
   const handleLogin = async (data) => {
-    // console.log(data);
-
-    const res = await axios.post(
-      "https://iroriginaltest.com/api/Account/GetToken",
-      {
-        data: {
+    try {
+      const res = await axios.post(
+        "https://iroriginaltest.com/api/Account/GetToken",
+        {
           userName: "matinhosseini",
-          password: "09129323541",
-        },
-      }
-    );
-
-    // const myHeaders = new Headers();
-    // myHeaders.append("Content-Type", "application/json");
-
-    // const raw = JSON.stringify({
-    //   userName: "matinhosseini",
-    //   password: "09129323541",
-    // });
-    // const requestOptions = {
-    //   method: "POST",
-    //   headers: myHeaders,
-    //   body: raw,
-    //   // redirect: "follow",\
-    //   mode: "no-cors",
-    // };
-
-    // fetch("https://iroriginaltest.com/api/Account/GetToken", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     username: "matinhosseini",
-    //     password: "09129323541",
-    //   }),
-    //   // mode: "no-cors",
-    // }).then((res) => {
-    //   console.log(res);
-    // });
-    console.log("response: ", res);
-    console.log("data: ", res.data);
-
-    // fetch("https://iroriginaltest.com/api/Account/GetToken", {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     userName: "matinhosseini",
-    //     password: "09129323541",
-    //   }),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   // mode: "no-cors",
-    // }).then((res) => console.log(res));
-
-    // axios.post("https://iroriginaltest.com/api/Account/GetToken",)
+          password: "0912932354",
+        }
+      );
+      console.log("response: ", res);
+      console.log("data: ", res.data);
+    } catch (error) {
+      setShowSnackbar(true);
+    }
   };
 
   return (
@@ -195,6 +156,8 @@ const Login = () => {
           {isSubmitting ? <ThreeDotsLoading /> : "ورود به پنل"}
         </Button>
       </form>
+
+      
     </div>
   );
 };
