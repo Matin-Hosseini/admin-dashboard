@@ -157,7 +157,17 @@ const Login = () => {
         </Button>
       </form>
 
-      
+      <Snackbar
+        open={showSnackbar}
+        autoHideDuration={3000}
+        onClose={() => setShowSnackbar(false)}
+        message="خطا در برقراری ارتباط"
+        action={
+          <IconButton color="inherit" onClick={() => setShowSnackbar(false)}>
+            <IoMdClose />
+          </IconButton>
+        }
+      />
     </div>
   );
 };
