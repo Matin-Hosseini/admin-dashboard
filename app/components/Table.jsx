@@ -162,7 +162,7 @@ export default function Table({ customers }) {
           {customer.firstName} - {customer.lastName}
         </div>
       ))}
-      {/* {customers.forEach((customer) => (customer.id = Math.random()))} */}
+      {customers.forEach((customer) => (customer.id = Math.random()))}
       <DataGrid
         sx={{ "& .MuiDataGrid-cell:focus": { outline: "none" } }}
         rows={customers}
