@@ -17,6 +17,7 @@ import { useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { BiMessageSquareAdd } from "react-icons/bi";
 import DeleteDialog from "./DeleteDialog";
+import { v4 as uuidv4 } from "uuid";
 
 export function CustomFooterStatusComponent(props) {
   console.log(props);
@@ -87,16 +88,23 @@ const initialRows = [
   },
 ];
 
-export default function Table() {
+export default function Table({ customers }) {
   const [rows, setRows] = useState(initialRows);
   const [selectedRows, setSelectedRows] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteDialogRow, setDeleteDialogRow] = useState({});
+  console.log(customers);
 
   const columns = [
     // { field: "id", headerName: "شناسه", width: 70 },
-    { field: "name", headerName: "نام و نام خانوادگی", width: 180 },
-    { field: "phone", headerName: "شماره موبایل", width: 150, editable: true },
+    { field: "firstName", headerName: "نام", width: 130 },
+    { field: "lastName", headerName: "نام خانوادگی", width: 180 },
+    {
+      field: "phoneNumber",
+      headerName: "شماره موبایل",
+      width: 150,
+      editable: true,
+    },
     { field: "nationalCode", headerName: "کد ملی", type: "string", width: 120 },
     {
       field: "actions",
@@ -149,9 +157,15 @@ export default function Table() {
 
   return (
     <div style={{ height: 600, width: "100%" }}>
+      {customers.map((customer) => (
+        <div key={customer.nationalCode}>
+          {customer.firstName} - {customer.lastName}
+        </div>
+      ))}
+      {/* {customers.forEach((customer) => (customer.id = Math.random()))} */}
       <DataGrid
         sx={{ "& .MuiDataGrid-cell:focus": { outline: "none" } }}
-        rows={rows}
+        rows={customers}
         columns={columns}
         slots={{
           toolbar: GridToolbar,
