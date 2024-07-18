@@ -26,6 +26,7 @@ import axios from "axios";
 import ThreeDotsLoading from "../components/ThreeDotLoading";
 import { IoMdClose } from "react-icons/io";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 const loginFormControlStyles = {
   width: "100%",
@@ -47,6 +48,8 @@ const Login = () => {
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarTitle, setSnackbarTitle] = useState("");
 
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -67,6 +70,9 @@ const Login = () => {
       );
 
       Cookies.set("token", res.data.result, { expires: 1, path: "" });
+      setShowSnackbar(true);
+      setSnackbarTitle("حوش آمدید.");
+      router.push("/");
     } catch (error) {
       setShowSnackbar(true);
       if (error.response.status === 400) {
